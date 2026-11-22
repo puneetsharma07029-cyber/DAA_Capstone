@@ -1,0 +1,98 @@
+{
+    "depot": "D",
+    "vehicle_capacity": 15,
+    "parcels": [
+        {
+            "id": "P1",
+            "priority": 5,
+            "deadline": 2,
+            "weight": 4,
+            "value": 70,
+            "destination": "A"
+        },
+        {
+            "id": "P2",
+            "priority": 3,
+            "deadline": 1,
+            "weight": 6,
+            "value": 60,
+            "destination": "B"
+        },
+        {
+            "id": "P3",
+            "priority": 4,
+            "deadline": 3,
+            "weight": 5,
+            "value": 80,
+            "destination": "C"
+        },
+        {
+            "id": "P4",
+            "priority": 2,
+            "deadline": 4,
+            "weight": 3,
+            "value": 35,
+            "destination": "E"
+        },
+        {
+            "id": "P5",
+            "priority": 5,
+            "deadline": 1,
+            "weight": 7,
+            "value": 95,
+            "destination": "F"
+        },
+        {
+            "id": "P6",
+            "priority": 1,
+            "deadline": 5,
+            "weight": 2,
+            "value": 20,
+            "destination": "A"
+        }
+    ],
+    "graph": {
+        "D": {
+            "A": 4,
+            "B": 6,
+            "C": 8,
+            "E": 7,
+            "F": 9
+        },
+        "A": {
+            "D": 4,
+            "B": 2,
+            "C": 5,
+            "E": 8,
+            "F": 10
+        },
+        "B": {
+            "D": 6,
+            "A": 2,
+            "C": 2,
+            "E": 5,
+            "F": 7
+        },
+        "C": {
+            "D": 8,
+            "A": 5,
+            "B": 2,
+            "E": 2,
+            "F": 4
+        },
+        "E": {
+            "D": 7,
+            "A": 8,
+            "B": 5,
+            "C": 2,
+            "F": 3
+        },
+        "F": {
+            "D": 9,
+            "A": 10,
+            "B": 7,
+            "C": 4,
+            "E": 3
+        }
+    }
+}

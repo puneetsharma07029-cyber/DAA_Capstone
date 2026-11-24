@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SwiftRoute | Mini Courier Planner</title><link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}"></head>
+<body>
+<header><div class="brand"><span class="logo">S</span><div><b>SwiftRoute</b><small>MINI COURIER PLANNER · DAA CAPSTONE</small></div></div><span class="live">● LOCAL PROTOTYPE</span></header>
+<main>
+<section class="hero"><div><p class="eyebrow">SMART LOGISTICS / ALGORITHM-POWERED</p><h1>Plan smarter.<br><em>Deliver faster.</em></h1><p class="sub">A practical courier planning prototype using sorting, dynamic programming and graph algorithms.</p></div><div class="hero-stat"><span>ACTIVE PARCELS</span><strong>{{ parcels|length }}</strong><small>Ready for planning</small></div></section>
+{% with messages=get_flashed_messages(with_categories=true) %}{% if messages %}{% for cat,msg in messages %}<div class="flash {{cat}}">{{msg}}</div>{% endfor %}{% endif %}{% endwith %}
+<section class="stats">
+<div class="stat"><span>PARCELS IN SYSTEM</span><b>{{parcels|length}}</b><small>Sample + added parcels</small></div>
+<div class="stat"><span>ALGORITHMS</span><b>04</b><small>Integrated DAA techniques</small></div>
+<div class="stat"><span>ROUTE NETWORK</span><b>05</b><small>Delivery locations</small></div>
+<div class="stat"><span>PLATFORM</span><b>WEB</b><small>Localhost application</small></div>
+</section>
+<div class="grid">
+<section class="panel"><div class="panel-head"><div><p class="eyebrow">01 / PARCEL MANAGEMENT</p><h2>Parcel inventory</h2></div><span class="pill">{{parcels|length}} RECORDS</span></div>
+<div class="table-wrap"><table><thead><tr><th>ID</th><th>PARCEL</th><th>WEIGHT</th><th>VALUE</th><th>PRIORITY</th><th></th></tr></thead><tbody>
+{% for p in parcels %}<tr><td class="id">{{p.id}}</td><td>{{p.name}}</td><td>{{p.weight}} kg</td><td>₹{{p.value}}</td><td><span class="priority">{{p.priority}} / 5</span></td><td><form method="post"><input type="hidden" name="action" value="delete"><input type="hidden" name="parcel_id" value="{{p.id}}"><button class="icon-btn" title="Delete parcel">×</button></form></td></tr>{% endfor %}
+</tbody></table></div>
+<form method="post" class="add-form"><input type="hidden" name="action" value="add"><input name="name" placeholder="Parcel name" required><input name="weight" type="number" min="1" placeholder="Weight kg" required><input name="value" type="number" min="0" placeholder="Value ₹" required><select name="priority"><option value="5">Priority 5</option><option value="4">Priority 4</option><option value="3" selected>Priority 3</option><option value="2">Priority 2</option><option value="1">Priority 1</option></select><button class="primary">+ Add parcel</button></form>
+</section>
+<section class="panel planner"><p class="eyebrow">02 / OPTIMIZATION ENGINE</p><h2>Generate delivery plan</h2><p class="muted">Run all four algorithms together and create an optimized sample delivery plan.</p>
+<form method="post"><input type="hidden" name="action" value="plan"><label>Vehicle capacity <span>MAX 500 KG</span></label><div class="capacity"><input type="number" name="capacity" min="0" max="500" value="{{capacity}}" required><b>KG</b></div><button class="primary wide">Generate optimized plan <span>→</span></button></form>
+<div class="algo-list"><div><b>01</b><span><strong>Merge Sort</strong><small>Parcel priority ordering</small></span><i>O(n log n)</i></div><div><b>02</b><span><strong>0/1 Knapsack</strong><small>Capacity-based parcel selection</small></span><i>O(nW)</i></div><div><b>03</b><span><strong>Dijkstra</strong><small>Shortest road distances</small></span><i>O((V+E)logV)</i></div><div><b>04</b><span><strong>Nearest Neighbor TSP</strong><small>Approximate delivery tour</small></span><i>O(V²)</i></div></div>
+</section></div>
+{% if result %}
+<section class="results"><div class="result-title"><div><p class="eyebrow">03 / GENERATED OUTPUT</p><h2>Delivery plan ready</h2></div><span class="success-tag">✓ PLAN GENERATED</span></div>
+<div class="result-cards"><div><small>PACKED WEIGHT</small><b>{{result.weight}} <small>/ {{result.capacity}} kg</small></b></div><div><small>SELECTED PARCEL VALUE</small><b>₹{{result.value}}</b></div><div><small>ESTIMATED TOUR</small><b>{{result.distance}} km</b></div></div>
+<div class="result-grid"><div class="result-box"><h3>Optimized route</h3><div class="route">{% for stop in result.route %}<span>{{stop}}</span>{% if not loop.last %}<i>→</i>{% endif %}{% endfor %}</div><h3>Shortest distances from Depot</h3>{% for loc,dist in result.distances.items() %}<div class="distance"><span>{{loc}}</span><b>{{dist}} km</b></div>{% endfor %}</div>
+<div class="result-box"><h3>Selected parcels (Knapsack)</h3>{% for p in result.selected %}<div class="distance"><span>{{p.id}} · {{p.name}}</span><b>{{p.weight}} kg</b></div>{% else %}<p class="muted">No parcels fit this capacity.</p>{% endfor %}<h3>Runtime snapshot</h3><div class="distance"><span>Merge Sort</span><b>{{"%.4f"|format(result.sort_ms)}} ms</b></div><div class="distance"><span>Knapsack DP</span><b>{{"%.4f"|format(result.pack_ms)}} ms</b></div></div></div>
+<p class="saved">✓ Full output saved to <code>reports/latest_plan.json</code></p></section>{% endif %}
+<footer>SWIFTROUTE · ACADEMIC DAA PROTOTYPE <span>Built with Python + Flask</span></footer>
+</main></body></html>

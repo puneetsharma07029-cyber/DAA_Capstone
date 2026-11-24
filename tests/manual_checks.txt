@@ -1,0 +1,1 @@
+1. Open localhost dashboard. 2. Add a parcel. 3. Delete a parcel. 4. Generate plan with capacity 20. 5. Check route, selected parcels and runtime. 6. Confirm reports/latest_plan.json exists.

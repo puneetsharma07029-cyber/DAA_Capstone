@@ -1,0 +1,1 @@
+Generated integrated plan is saved as latest_plan.json after clicking Generate optimized plan.

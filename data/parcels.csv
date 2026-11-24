@@ -1,0 +1,7 @@
+id,name,weight,value,priority
+P101,Laptop,4,90000,5
+P102,Documents,2,4500,5
+P103,Books,6,5500,3
+P104,Medicine,3,8500,5
+P105,Clothes,5,4000,2
+P106,Electronics,7,10000,4
